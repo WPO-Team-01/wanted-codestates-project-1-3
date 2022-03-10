@@ -5,17 +5,16 @@ const Circle = styled.span`
   width: 15px;
   height: 15px;
   border-radius: 15px;
-  background: ${({ isGreen }) => (isGreen ? "green" : "red")};
+  background: ${({ state }) => (state ? "green" : "red")};
 `;
 
-const Button = () => {
-  const [isGreen, setIsGreen] = useState(false);
+const Button = ({state, setState}) => {
 
   const handleButton = () => {
-    setIsGreen((isGreen) => !isGreen);
+    setState((state) => !state);
   };
 
-  return <Circle onClick={handleButton} isGreen={isGreen} />;
+  return <Circle onClick={handleButton} state={state} />;
 };
 
 export default Button;

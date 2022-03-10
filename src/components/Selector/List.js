@@ -38,7 +38,7 @@ const Item = styled.div`
   }
 `;
 
-const List = ({ data }) => {
+const List = ({ data, title }) => {
   const [listData, setListData] = useState(data);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const List = ({ data }) => {
 
   return (
     <Container>
-      <Title>available option</Title>
+      <Title>{title}</Title>
       <SubContainer>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="fields">

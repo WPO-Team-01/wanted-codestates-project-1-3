@@ -19,10 +19,10 @@ const Total = styled.div`
   box-sizing: border-box;
 `;
 
-const Selector = ({ data }) => {
+const Selector = ({ data, title }) => {
   return (
     <Container>
-      <List data={data} />
+      <List data={data} title={title}/>
       <Total>1 / 8</Total>
     </Container>
   );

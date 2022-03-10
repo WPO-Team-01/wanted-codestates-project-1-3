@@ -16,13 +16,12 @@ const Span = styled.span`
   margin-top: 5px;
 `;
 
-const Radio = () => {
-  const [radio, setRadio] = useState("XS");
+const Radio = ({state, setState}) => {
   // 선택한 사이즈는 radio 에 담겨있습니다.
   const sizes = ["XS", "S", "M"];
 
   const handleChange = (size) => {
-    setRadio(size);
+    setState(size);
   };
 
   return (
@@ -32,7 +31,7 @@ const Radio = () => {
           <Input
             type="radio"
             name="size"
-            defaultChecked={radio === size}
+            defaultChecked={state === size}
             onClick={() => handleChange(size)}
           />
           <Span>{size}</Span>

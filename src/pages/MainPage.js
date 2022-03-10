@@ -35,6 +35,17 @@ const PopoverWrapper = styled.div`
 const MainPage = ({ data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [isTitleChange, setIsTitleChange] = useState(false);
+  const [titleInput, setTitleInput] = useState([
+    "available options",
+    "selected options",
+  ]); // available, selected
+  const [isSearchMode, setIsSearchMode] = useState(false);
+  const [isMoveOneMode, setIsMoveOneMode] = useState(false);
+  const [isDisplaySelectItem, setIsDisplaySelectItem] = useState(false);
+  const [itemSize, setItemSize] = useState("XS");
+  const [areaSize, setAreaSize] = useState([200, 50]); // 가로, 세로
+
   const [available, setAvailable] = useState(data.available);
   const [selected, setSelected] = useState(data.selected);
   // Selector에 props로 내려주는 state(배열 값)
@@ -59,8 +70,6 @@ const MainPage = ({ data }) => {
       })
     );
   };
-  console.log(availableInput);
-  console.log(available);
 
   // 1. input 에 입력할 때마다 바로바로 검색되는 경우
   useEffect(() => availableSearching(), [availableInput]);
@@ -80,7 +89,7 @@ const MainPage = ({ data }) => {
             setValue={setAvailableInput}
             enter={availableSearching}
           />
-          <Selector data={available} />
+          <Selector data={available} title={titleInput[0]}/>
         </Wrapper>
         {/* 버튼모음*/}
         <BtnWrapper>
@@ -106,14 +115,33 @@ const MainPage = ({ data }) => {
             setValue={setSelectedInput}
             enter={selectedSearching}
           />
-          <Selector data={selected} />
+          <Selector data={selected} title={titleInput[1]} />
         </Wrapper>
         {/* 셋팅메뉴 */}
         <PopoverWrapper>
           <Button onClick={() => setIsModalOpen(!isModalOpen)}>
             <SettingsIcon />
           </Button>
-          {isModalOpen ? <Popover /> : ""}
+          {isModalOpen ? (
+            <Popover
+              titleChange={isTitleChange}
+              setTitleChange={setIsTitleChange}
+              title={titleInput}
+              setTitle={setTitleInput}
+              searchMode={isSearchMode}
+              setSearchMode={setIsSearchMode}
+              moveOneMode={isMoveOneMode}
+              setMoveOneMode={setIsMoveOneMode}
+              displaySelectItem={isDisplaySelectItem}
+              setDisplaySelectItem={setIsDisplaySelectItem}
+              itemSize={itemSize}
+              setItemSize={setItemSize}
+              areaSize={areaSize}
+              setAreaSize={setAreaSize}
+            />
+          ) : (
+            ""
+          )}
         </PopoverWrapper>
       </Container>
     </div>
