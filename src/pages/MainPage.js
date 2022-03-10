@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
@@ -34,12 +34,53 @@ const PopoverWrapper = styled.div`
 
 const MainPage = ({ data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [available, setAvailable] = useState(data.available);
+  const [selected, setSelected] = useState(data.selected);
+  // Selector에 props로 내려주는 state(배열 값)
+  const [availableInput, setAvailableInput] = useState("");
+  const [selectedInput, setSelectedInput] = useState("");
+  // input값 가져오는 state
+  const availableData = data.available;
+  const selectedData = data.selected;
+  // data값 보관하는 const 값
+
+  const availableSearching = () => {
+    setAvailable(
+      availableData.filter((e) => {
+        return e.name.includes(availableInput);
+      })
+    );
+  };
+  const selectedSearching = () => {
+    setSelected(
+      selectedData.filter((e) => {
+        return e.includes(selectedInput);
+      })
+    );
+  };
+  console.log(availableInput);
+  console.log(available);
+
+  // 1. input 에 입력할 때마다 바로바로 검색되는 경우
+  useEffect(() => availableSearching(), [availableInput]);
+  useEffect(() => selectedSearching(), [selectedInput]);
+  // 위 두줄로 작동(주석 해제하면 됨.)
+
+  // 2. input 에 입력 뒤 엔터키를 쳐야만 검색되는 경우
+  // SearchInput 태그에 enter props로 내려주는 것과,
+  // searchInput 파일안의 onKeyPress 핸들러로 작동
+
   return (
     <div>
       <Container>
         <Wrapper>
-          <SearchInput />
-          <Selector data={data.available} />
+          <SearchInput
+            value={availableInput}
+            setValue={setAvailableInput}
+            enter={availableSearching}
+          />
+          <Selector data={available} />
         </Wrapper>
         {/* 버튼모음*/}
         <BtnWrapper>
@@ -60,8 +101,12 @@ const MainPage = ({ data }) => {
           </Button>
         </BtnWrapper>
         <Wrapper>
-          <SearchInput />
-          <Selector data={data.selected} />
+          <SearchInput
+            value={selectedInput}
+            setValue={setSelectedInput}
+            enter={selectedSearching}
+          />
+          <Selector data={selected} />
         </Wrapper>
         {/* 셋팅메뉴 */}
         <PopoverWrapper>
