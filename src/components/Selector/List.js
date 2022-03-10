@@ -1,13 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.section`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  border: 1px #d1d5db solid;
+const Container = styled.div`
+  flex-grow: 1;
 `;
 const SubContainer = styled.section`
   width: 100%;
@@ -20,22 +15,22 @@ const SubContainer = styled.section`
 `;
 const Title = styled.div`
   width: 100%;
-  height: 50px;
   display: flex;
   align-items: center;
   font-size: 20px;
   font-weight: bolder;
-  margin: 10px 10px;
+  padding: 20px 10px;
+  box-sizing: border-box;
+  border-bottom: 1px #e5e7eb solid;
 `;
 const Item = styled.div`
   width: 100%;
-  height: 30px;
   display: flex;
   align-items: center;
   text-align: left;
-  padding: 10px 0;
-  margin-top: -1px;
-  border: 1px #e5e7eb solid;
+  padding: 10px;
+  border-bottom: 1px #e5e7eb solid;
+  box-sizing: border-box;
 `;
 
 const List = ({ data }) => {

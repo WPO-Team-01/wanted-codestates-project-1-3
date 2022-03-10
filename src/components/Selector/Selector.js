@@ -84,13 +84,22 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid black;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+`;
+
+const Total = styled.div`
+  padding: 10px;
+  width: 100%;
+  border-top: 1px solid #e5e7eb;
+  box-sizing: border-box;
 `;
 
 const Selector = () => {
   return (
     <Container>
       <List data={data} />
+      <Total>1 / 8</Total>
     </Container>
   );
 };

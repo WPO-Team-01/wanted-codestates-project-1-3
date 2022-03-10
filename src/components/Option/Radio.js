@@ -32,7 +32,7 @@ const Radio = () => {
           <Input
             type="radio"
             name="size"
-            checked={radio === size}
+            defaultChecked={radio === size}
             onClick={() => handleChange(size)}
           />
           <Span>{size}</Span>

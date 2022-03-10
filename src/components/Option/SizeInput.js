@@ -9,8 +9,7 @@ const Container = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 10px 10px;
-  margin-top: -1px;
-  border: 1px #e5e7eb solid;
+  border-bottom: 1px solid #e5e7eb;
 `;
 
 const Input = styled.input`

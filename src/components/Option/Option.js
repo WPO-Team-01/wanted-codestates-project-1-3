@@ -10,7 +10,10 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   border: 1px solid #e5e7eb;
-  border-radius: 5px;
+  border-radius: 4px;
+  position: absolute;
+  right: 0;
+  background: #fff;
 `;
 
 // 삭제예정

@@ -1,39 +1,40 @@
+import React from "react";
 import styled from "styled-components";
+import Menu from "../Option/Menu";
+import TitleInput from "../Option/TitleInput";
+import SizeInput from "../Option/SizeInput";
 
-const MenuWrapper = styled.div`
-  border: 1px solid #c3c3c3;
-  position: absolute;
-  top: 60px;
-  width: 200px;
-  right: 0;
-  background-color: #fff;
-  border-radius: 4px; ;
-`;
-
-const Menu = styled.div`
+const Container = styled.section`
+  width: 300px;
+  height: 600px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
+  flex-direction: column;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  position: absolute;
+  right: 0;
+  background: #fff;
 `;
 
-const Circle = styled.span`
-  display: inline-block;
-  background-color: red;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-`;
+// 삭제예정
+let title1 = "available optionsasdsad";
+let title2 = "selected options";
+// 삭제예정 제목 props
+let width = "200px";
+let height = "50px";
+// 삭제예정 사이즈 조절 props
 
 const Popover = () => {
   return (
-    <MenuWrapper>
-      {/* list */}
-      <Menu>
-        <span>타이틀</span>
-        <Circle></Circle>
-      </Menu>
-    </MenuWrapper>
+    <Container>
+      <Menu title="타이틀" mode="Button" />
+      <TitleInput title1={title1} title2={title2} />
+      <Menu title="검색" mode="Button" />
+      <Menu title="하나씩만 옮기기" mode="Button" />
+      <Menu title="선택된 아이템 갯수 표시" mode="Button" />
+      <Menu title="아이템 크기" mode="Radio" />
+      <SizeInput width={width} height={height} />
+    </Container>
   );
 };
 
