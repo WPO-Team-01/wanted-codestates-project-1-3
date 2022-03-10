@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
   width: 100%;
@@ -39,16 +40,65 @@ const Item = styled.div`
 //shift 누르면 처음 누른거에서 마지막까지 한번에 선택
 //ctrl 누르면 하나하나 다중 선택 가능
 const List = ({ data }) => {
+  const [listData, setListData] = useState(data);
+
+  useEffect(() => {
+    setListData(data);
+  }, [data]);
+
+  const handleOnDragEnd = result => {
+    const items = [...listData];
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setListData(items);
+  };
+
   return (
     <Container>
       <Title>available option</Title>
       <SubContainer>
-        {data.map((item, index) => (
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId='fields'>
+            {provided => (
+              <div
+                className='fields'
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {listData.map((item, index) => {
+                  let strFormId = String(item.id);
+                  return (
+                    <Draggable
+                      key={item.id}
+                      draggableId={strFormId}
+                      index={index}
+                    >
+                      {provided => (
+                        <div
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                        >
+                          <Item key={item.id}>
+                            {item.emoji}&nbsp;&nbsp;
+                            {item.name}
+                          </Item>
+                        </div>
+                      )}
+                    </Draggable>
+                  );
+                })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+        {/* {data.map((item, index) => (
           <Item key={item.id}>
             {item.emoji}&nbsp;&nbsp;
             {item.name}
           </Item>
-        ))}
+        ))} */}
       </SubContainer>
     </Container>
   );

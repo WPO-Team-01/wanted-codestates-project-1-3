@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './App.css';
-import { moveToSelect, removeFromSelect } from './redux/contents/contentsSlice';
 import MainPage from './pages/MainPage';
 
 function App() {
