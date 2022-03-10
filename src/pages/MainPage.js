@@ -1,15 +1,15 @@
-import { useState } from "react";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import ReplayIcon from "@mui/icons-material/Replay";
-import SettingsIcon from "@mui/icons-material/Settings";
-import styled from "styled-components";
-import SearchInput from "../components/Selector/SearchInput";
-import Button from "../components/Selector/Button";
-import Popover from "../components/Selector/Popover";
-import Selector from "../components/Selector/Selector";
+import { useState } from 'react';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import ReplayIcon from '@mui/icons-material/Replay';
+import SettingsIcon from '@mui/icons-material/Settings';
+import styled from 'styled-components';
+import SearchInput from '../components/Selector/SearchInput';
+import Button from '../components/Selector/Button';
+import Popover from '../components/Selector/Popover';
+import Selector from '../components/Selector/Selector';
 
 const Container = styled.div`
   display: flex;
@@ -68,7 +68,7 @@ const MainPage = ({ data }) => {
           <Button onClick={() => setIsModalOpen(!isModalOpen)}>
             <SettingsIcon />
           </Button>
-          {isModalOpen ? <Popover /> : ""}
+          {isModalOpen ? <Popover /> : ''}
         </PopoverWrapper>
       </Container>
     </div>

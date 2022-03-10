@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const Container = styled.div`
   width: 100%;
@@ -36,7 +36,8 @@ const Item = styled.div`
     background: #f1f3f8;
   }
 `;
-
+//shift 누르면 처음 누른거에서 마지막까지 한번에 선택
+//ctrl 누르면 하나하나 다중 선택 가능
 const List = ({ data }) => {
   return (
     <Container>
