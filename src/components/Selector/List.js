@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
+  width: 100%;
   flex-grow: 1;
 `;
 const SubContainer = styled.section`
@@ -31,6 +32,9 @@ const Item = styled.div`
   padding: 10px;
   border-bottom: 1px #e5e7eb solid;
   box-sizing: border-box;
+  :hover {
+    background: #f1f3f8;
+  }
 `;
 
 const List = ({ data }) => {

@@ -32,14 +32,14 @@ const PopoverWrapper = styled.div`
   position: relative;
 `;
 
-const MainPage = () => {
+const MainPage = ({ data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div>
       <Container>
         <Wrapper>
           <SearchInput />
-          <Selector />
+          <Selector data={data.available} />
         </Wrapper>
         {/* 버튼모음*/}
         <BtnWrapper>
@@ -61,7 +61,7 @@ const MainPage = () => {
         </BtnWrapper>
         <Wrapper>
           <SearchInput />
-          <Selector />
+          <Selector data={data.selected} />
         </Wrapper>
         {/* 셋팅메뉴 */}
         <PopoverWrapper>

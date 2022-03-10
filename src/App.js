@@ -19,7 +19,7 @@ function App() {
 
   return (
     <div className="App">
-      <MainPage />
+      <MainPage data={data} />
       <button onClick={asdf}>추가</button>
       <button onClick={remove}>지우기</button>
     </div>
