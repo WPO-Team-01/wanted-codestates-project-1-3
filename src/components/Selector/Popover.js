@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Menu from "./Menu";
-import TitleInput from "./TitleInput";
-import SizeInput from "./SizeInput";
+import Menu from "../Option/Menu";
+import TitleInput from "../Option/TitleInput";
+import SizeInput from "../Option/SizeInput";
 
 const Container = styled.section`
   width: 300px;
@@ -24,7 +24,7 @@ let width = "200px";
 let height = "50px";
 // 삭제예정 사이즈 조절 props
 
-const Option = () => {
+const Popover = () => {
   return (
     <Container>
       <Menu title="타이틀" mode="Button" />
@@ -38,4 +38,4 @@ const Option = () => {
   );
 };
 
-export default Option;
+export default Popover;

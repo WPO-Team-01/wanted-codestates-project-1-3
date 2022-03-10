@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import { moveToSelect, removeFromSelect } from "./redux/contents/contentsSlice";
+import MainPage from "./pages/MainPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function App() {
 
   return (
     <div className="App">
+      <MainPage />
       <button onClick={asdf}>추가</button>
       <button onClick={remove}>지우기</button>
     </div>
