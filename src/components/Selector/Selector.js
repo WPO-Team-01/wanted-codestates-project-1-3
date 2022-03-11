@@ -10,6 +10,8 @@ const Container = styled.section`
   align-items: center;
   border: 1px solid #e5e7eb;
   border-radius: 4px;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 const Total = styled.div`

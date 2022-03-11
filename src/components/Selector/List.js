@@ -12,8 +12,6 @@ const SubContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  overflow-x: hidden;
-  overflow-y: auto;
 `;
 const Title = styled.div`
   width: 100%;
@@ -25,6 +23,7 @@ const Title = styled.div`
   box-sizing: border-box;
   border-bottom: 1px #e5e7eb solid;
 `;
+
 const Item = styled.div`
   width: 100%;
   display: flex;
@@ -78,6 +77,7 @@ const List = ({
                 className='fields'
                 {...provided.droppableProps}
                 ref={provided.innerRef}
+                style={{ width: "100%" }}
               >
                 {listData.map((item, index) => {
                   let strFormId = String(item.id);
