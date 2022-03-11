@@ -54,7 +54,7 @@ const MainPage = () => {
   const [titleInput, setTitleInput] = useState([
     "available options",
     "selected options",
-  ]); // available, selected
+  ]);
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [isMoveOneMode, setIsMoveOneMode] = useState(true);
   const [isDisplaySelectItem, setIsDisplaySelectItem] = useState(false);
@@ -123,6 +123,9 @@ const MainPage = () => {
             isMoveOneMode={isMoveOneMode}
             select={moveSelected}
             setMultiSelected={setMoveSelected}
+            fieldCount={data.available.length}
+            selectCount={moveSelected.length}
+            isDisplaySelectItem={isDisplaySelectItem}
           />
         </Wrapper>
         {/* 버튼모음*/}
@@ -165,6 +168,9 @@ const MainPage = () => {
             isMoveOneMode={isMoveOneMode}
             select={moveAvailable}
             setMultiSelected={setMoveAailable}
+            fieldCount={data.selected.length}
+            selectCount={moveAvailable.length}
+            isDisplaySelectItem={isDisplaySelectItem}
           />
         </Wrapper>
         {/* 셋팅메뉴 */}

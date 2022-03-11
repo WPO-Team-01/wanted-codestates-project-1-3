@@ -70,16 +70,14 @@ const Selector = ({
   isMoveOneMode = true,
   setMultiSelected,
   select,
+  fieldCount,
+  selectCount,
+  isDisplaySelectItem,
 }) => {
   const dispatch = useDispatch();
   const [anchorId, setAnchorId] = useState();
   const [idList, setIdList] = useState([]);
   const [shiftEditingList, setShiftEditingList] = useState([]);
-
-  const selectedIdList = [
-    ...idList.filter((id) => !shiftEditingList.includes(id)),
-    ...shiftEditingList,
-  ];
 
   useEffect(() => {
     setMultiSelected([
@@ -197,7 +195,9 @@ const Selector = ({
           </DragDropContext>
         </SubContainer>
       </Container>
-      <Total>1 / 8</Total>
+      <Total>
+        {isDisplaySelectItem ? `${selectCount} / ${fieldCount}` : "0 / 0"}
+      </Total>
     </SelectorContainer>
   );
 };
