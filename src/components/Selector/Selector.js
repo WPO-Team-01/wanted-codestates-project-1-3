@@ -69,6 +69,7 @@ const Selector = ({
   type,
   isMoveOneMode = true,
   setMultiSelected,
+  select,
 }) => {
   const dispatch = useDispatch();
   const [anchorId, setAnchorId] = useState();
@@ -178,9 +179,7 @@ const Selector = ({
                             <Item
                               key={item.id}
                               id={item.id}
-                              background={
-                                selectedIdList.includes(item.id) && "#62D1FF"
-                              }
+                              background={select.includes(item.id) && "#62D1FF"}
                               onClick={(e) => onClick(e.target.id)}
                             >
                               {item.emoji}&nbsp;&nbsp;

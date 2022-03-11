@@ -43,10 +43,10 @@ const PopoverWrapper = styled.div`
 const MainPage = () => {
   const data = useSelector((state) => state.contents);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  //한가지 item 선택
-  const [isSelected, setIsSelected] = useState([]);
-  //여러개 item 선택
-  const [multiSelected, setMultiSelected] = useState([]);
+  // select에서 available
+  const [moveAvailable, setMoveAailable] = useState([]);
+  // available 에서 select
+  const [moveSelected, setMoveSelected] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -75,19 +75,19 @@ const MainPage = () => {
   }, [data, availableInput]);
 
   const handleRemoveFromSelect = () => {
-    if (!multiSelected.length) {
+    if (!moveAvailable.length) {
       return alert("필드를 선택해 주세요");
     }
-    dispatch(removeFromSelect(multiSelected));
-    setMultiSelected([]);
+    dispatch(removeFromSelect(moveAvailable));
+    setMoveAailable([]);
   };
 
   const handleMoveToSelect = () => {
-    if (!multiSelected.length) {
+    if (!moveSelected.length) {
       return alert("필드를 선택해 주세요");
     }
-    dispatch(moveToSelect(multiSelected));
-    setMultiSelected([]);
+    dispatch(moveToSelect(moveSelected));
+    setMoveSelected([]);
   };
 
   const onAllSelected = () => {
@@ -121,8 +121,8 @@ const MainPage = () => {
             title={titleInput[0]}
             type={ListType.Available}
             isMoveOneMode={isMoveOneMode}
-            multiSelected={multiSelected}
-            setMultiSelected={setMultiSelected}
+            select={moveSelected}
+            setMultiSelected={setMoveSelected}
           />
         </Wrapper>
         {/* 버튼모음*/}
@@ -163,8 +163,8 @@ const MainPage = () => {
             title={titleInput[1]}
             type={ListType.Selected}
             isMoveOneMode={isMoveOneMode}
-            multiSelected={multiSelected}
-            setMultiSelected={setMultiSelected}
+            select={moveAvailable}
+            setMultiSelected={setMoveAailable}
           />
         </Wrapper>
         {/* 셋팅메뉴 */}
