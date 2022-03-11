@@ -1,22 +1,23 @@
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import {
   initialization,
   allSelect,
   moveToSelect,
   removeFromSelect,
-} from '../redux/contents/contentsSlice';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import ReplayIcon from '@mui/icons-material/Replay';
-import SettingsIcon from '@mui/icons-material/Settings';
-import styled from 'styled-components';
-import SearchInput from '../components/Selector/SearchInput';
-import Button from '../components/Selector/Button';
-import Popover from '../components/Selector/Popover';
-import Selector from '../components/Selector/Selector';
+  allRemoveSelect,
+} from "../redux/contents/contentsSlice";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import ReplayIcon from "@mui/icons-material/Replay";
+import SettingsIcon from "@mui/icons-material/Settings";
+import styled from "styled-components";
+import SearchInput from "../components/Selector/SearchInput";
+import Button from "../components/Selector/Button";
+import Popover from "../components/Selector/Popover";
+import { useState, useMemo } from "react";
+import Selector, { ListType } from "../components/Selector/Selector";
 
 const Container = styled.div`
   display: flex;
@@ -40,85 +41,71 @@ const PopoverWrapper = styled.div`
 `;
 
 const MainPage = () => {
-  const data = useSelector(state => state.contents);
-  const dispatch = useDispatch();
-
+  const data = useSelector((state) => state.contents);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   //한가지 item 선택
   const [isSelected, setIsSelected] = useState([]);
   //여러개 item 선택
   const [multiSelected, setMultiSelected] = useState([]);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const [isTitleChange, setIsTitleChange] = useState(false);
   const [titleInput, setTitleInput] = useState([
-    'available options',
-    'selected options',
+    "available options",
+    "selected options",
   ]); // available, selected
   const [isSearchMode, setIsSearchMode] = useState(false);
-  const [isMoveOneMode, setIsMoveOneMode] = useState(false);
+  const [isMoveOneMode, setIsMoveOneMode] = useState(true);
   const [isDisplaySelectItem, setIsDisplaySelectItem] = useState(false);
-  const [itemSize, setItemSize] = useState('XS');
+  const [itemSize, setItemSize] = useState("XS");
   const [areaSize, setAreaSize] = useState([200, 50]); // 가로, 세로
 
-  const [available, setAvailable] = useState(data.available);
-  const [selected, setSelected] = useState(data.selected);
   // Selector에 props로 내려주는 state(배열 값)
-  const [availableInput, setAvailableInput] = useState('');
-  const [selectedInput, setSelectedInput] = useState('');
+  const [availableInput, setAvailableInput] = useState("");
+  const [selectedInput, setSelectedInput] = useState("");
   // input값 가져오는 state
-  const availableData = data.available;
-  const selectedData = data.selected;
-  // data값 보관하는 const 값
 
-  const availableSearching = () => {
-    setAvailable(
-      availableData.filter(e => {
-        return e.name.includes(availableInput);
-      }),
-    );
-  };
-  const selectedSearching = () => {
-    setSelected(
-      selectedData.filter(e => {
-        return e.includes(selectedInput);
-      }),
-    );
-  };
+  const selectedSearching = useMemo(() => {
+    return data.selected.filter((item) => item.name.includes(selectedInput));
+  }, [data, selectedInput]);
 
-  useEffect(() => {
-    setAvailable(data.available);
-    setSelected(data.selected);
-  }, [data]);
-
-  // 1. input 에 입력할 때마다 바로바로 검색되는 경우
-  useEffect(() => availableSearching(), [availableInput]);
-  useEffect(() => selectedSearching(), [selectedInput]);
-  // 위 두줄로 작동(주석 해제하면 됨.)
-  useEffect(() => {
-    setAvailable(data.available);
-    setSelected(data.selected);
-  }, [data]);
-  // 2. input 에 입력 뒤 엔터키를 쳐야만 검색되는 경우
-  // SearchInput 태그에 enter props로 내려주는 것과,
-  // searchInput 파일안의 onKeyPress 핸들러로 작동
-  const handleMoveToSelect = () => {
-    if (isMoveOneMode) {
-      dispatch(moveToSelect(isSelected, data));
-    } else {
-      dispatch(moveToSelect(multiSelected, data));
-      setMultiSelected([]);
-    }
-  };
+  const availableSearching = useMemo(() => {
+    return data.available.filter((item) => item.name.includes(availableInput));
+  }, [data, availableInput]);
 
   const handleRemoveFromSelect = () => {
-    if (isMoveOneMode) {
-      dispatch(removeFromSelect(isSelected, data));
+    if (!multiSelected.length) {
+      return alert("필드를 선택해 주세요");
+    }
+    dispatch(removeFromSelect(multiSelected));
+    setMultiSelected([]);
+  };
+
+  const handleMoveToSelect = () => {
+    if (!multiSelected.length) {
+      return alert("필드를 선택해 주세요");
+    }
+    dispatch(moveToSelect(multiSelected));
+    setMultiSelected([]);
+  };
+
+  const onAllSelected = () => {
+    if (data.available.length) {
+      dispatch(allSelect());
     } else {
-      dispatch(removeFromSelect(multiSelected, data));
-      setMultiSelected([]);
+      alert("추가할 데이터가 없습니다.");
     }
   };
+
+  const onAllRemoveSelected = () => {
+    if (data.selected.length) {
+      dispatch(allRemoveSelect());
+    } else {
+      alert("제거할 데이터가 없습니다.");
+    }
+  };
+
   return (
     <div>
       <Container>
@@ -130,8 +117,9 @@ const MainPage = () => {
             isSearchMode={isSearchMode}
           />
           <Selector
-            data={available}
+            data={availableSearching}
             title={titleInput[0]}
+            type={ListType.Available}
             isMoveOneMode={isMoveOneMode}
             multiSelected={multiSelected}
             setMultiSelected={setMultiSelected}
@@ -156,10 +144,10 @@ const MainPage = () => {
           >
             <ArrowBackIosNewIcon />
           </Button>
-          <Button onClick={() => dispatch(allSelect(data))}>
+          <Button onClick={onAllSelected}>
             <KeyboardDoubleArrowRightIcon />
           </Button>
-          <Button onClick={() => dispatch(initialization(data))}>
+          <Button onClick={onAllRemoveSelected}>
             <KeyboardDoubleArrowLeftIcon />
           </Button>
         </BtnWrapper>
@@ -171,8 +159,9 @@ const MainPage = () => {
             isSearchMode={isSearchMode}
           />
           <Selector
-            data={selected}
+            data={selectedSearching}
             title={titleInput[1]}
+            type={ListType.Selected}
             isMoveOneMode={isMoveOneMode}
             multiSelected={multiSelected}
             setMultiSelected={setMultiSelected}
@@ -201,7 +190,7 @@ const MainPage = () => {
               setAreaSize={setAreaSize}
             />
           ) : (
-            ''
+            ""
           )}
         </PopoverWrapper>
       </Container>
