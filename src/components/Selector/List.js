@@ -37,10 +37,9 @@ const Item = styled.div`
     background: #f1f3f8;
   }
 `;
-//shift 누르면 처음 누른거에서 마지막까지 한번에 선택
-//ctrl 누르면 하나하나 다중 선택 가능
 const List = ({ data }) => {
   const [listData, setListData] = useState(data);
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     setListData(data);
@@ -51,6 +50,20 @@ const List = ({ data }) => {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     setListData(items);
+  };
+
+  const handleMultiClick = e => {
+    //shift 누르면 처음 누른거에서 마지막까지 한번에 선택
+    if (e.shiftKey) {
+      if (!isClicked) {
+        //처음 shift 누르고 클릭할 때
+        setIsClicked(true);
+        //처음에 위쪽에 클릭해서 아래쪽을 눌러야하는 경우
+        //처음에 아래쪽을 클릭해서 위쪽을 눌러야하는 경우
+      } else if (isClicked) {
+        // 하나이상의 아이템 클릭후 shift 눌렀을 때
+      }
+    }
   };
 
   return (
@@ -79,7 +92,12 @@ const List = ({ data }) => {
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <Item key={item.id}>
+                          <Item
+                            key={item.id}
+                            onClick={e => {
+                              handleMultiClick(e);
+                            }}
+                          >
                             {item.emoji}&nbsp;&nbsp;
                             {item.name}
                           </Item>

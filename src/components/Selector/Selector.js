@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import List from "./List";
+import React from 'react';
+import styled from 'styled-components';
+import List from './List';
 
 const Container = styled.section`
   width: 300px;

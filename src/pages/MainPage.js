@@ -7,6 +7,9 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import SettingsIcon from '@mui/icons-material/Settings';
 import styled from 'styled-components';
 import SearchInput from '../components/Selector/SearchInput';
+useEffect(() => {
+  setAvailable(data.available);
+}, [data.available]);
 import Button from '../components/Selector/Button';
 import Popover from '../components/Selector/Popover';
 import Selector from '../components/Selector/Selector';
@@ -34,6 +37,7 @@ const PopoverWrapper = styled.div`
 
 const MainPage = ({ data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div>
       <Container>
