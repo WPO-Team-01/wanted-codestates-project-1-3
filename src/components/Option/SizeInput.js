@@ -18,11 +18,17 @@ const Input = styled.input`
   margin-top: 10px;
 `;
 
-const SizeInput = ({ width, height }) => {
+const SizeInput = ({ state, setState }) => {
+  const handleSizeInput = (e, num) => {
+    let tempSizeList = [...state];
+    tempSizeList[num] = e.target.value;
+    setState((state) => tempSizeList);
+  };
+
   return (
     <Container>
-      <Input placeholder={`가로 (현재 : ${width}px)`} />
-      <Input placeholder={`세로 (현재 : ${height}px)`} />
+      <Input placeholder={`가로 (현재 : ${state[0]}px)`} onChange={(e) => handleSizeInput(e, 0)}/>
+      <Input placeholder={`세로 (현재 : ${state[1]}px)`} onChange={(e) => handleSizeInput(e, 1)}/>
     </Container>
   );
 };

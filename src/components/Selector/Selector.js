@@ -3,13 +3,19 @@ import styled from "styled-components";
 import List from "./List";
 
 const Container = styled.section`
-  width: 300px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
   border: 1px solid #e5e7eb;
   border-radius: 4px;
+
+  .Container-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Total = styled.div`
@@ -19,10 +25,10 @@ const Total = styled.div`
   box-sizing: border-box;
 `;
 
-const Selector = ({ data, title }) => {
+const Selector = ({ data, title, itemSize }) => {
   return (
     <Container>
-      <List data={data} title={title}/>
+      <List data={data} title={title} itemSize={itemSize}/>
       <Total>1 / 8</Total>
     </Container>
   );

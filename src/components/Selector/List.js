@@ -4,16 +4,15 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const Container = styled.div`
   width: 100%;
+  height: 100%;
   flex-grow: 1;
 `;
 const SubContainer = styled.section`
   width: 100%;
-  height: 100%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  overflow-x: hidden;
-  overflow-y: auto;
 `;
 const Title = styled.div`
   width: 100%;
@@ -33,12 +32,14 @@ const Item = styled.div`
   padding: 10px;
   border-bottom: 1px #e5e7eb solid;
   box-sizing: border-box;
+  font-size: ${({ state }) =>
+    state === "M" ? "medium" : state === "S" ? "small" : "x-small"};
   :hover {
     background: #f1f3f8;
   }
 `;
 
-const List = ({ data, title }) => {
+const List = ({ data, title, itemSize }) => {
   const [listData, setListData] = useState(data);
 
   useEffect(() => {
@@ -78,7 +79,7 @@ const List = ({ data, title }) => {
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <Item key={item.id}>
+                          <Item key={item.id} state={itemSize}>
                             {item.emoji}&nbsp;&nbsp;
                             {item.name}
                           </Item>
