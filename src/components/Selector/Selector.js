@@ -97,7 +97,10 @@ const Selector = ({
   const onClick = (value) => {
     const convertedValue = Number(value);
 
-    if (!hotkeys.isPressed("command") && !hotkeys.isPressed("shift")) {
+    if (
+      !hotkeys.isPressed("command") &&
+      (!hotkeys.isPressed("shift") || !hotkeys.isPressed("control"))
+    ) {
       if (!idList.includes(convertedValue)) {
         setIdList([convertedValue]);
         setAnchorId(convertedValue);
@@ -108,7 +111,10 @@ const Selector = ({
       setShiftEditingList([]);
     }
 
-    if (!isMoveOneMode && hotkeys.isPressed("command")) {
+    if (
+      !isMoveOneMode &&
+      (hotkeys.isPressed("command") || hotkeys.isPressed("control"))
+    ) {
       const targetList = [
         ...idList.filter((id) => !shiftEditingList.includes(id)),
         ...shiftEditingList,
@@ -147,7 +153,7 @@ const Selector = ({
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     dispatch(
-      type === ListType.Available ? setAvaiable(items) : setSelected(items),
+      type === ListType.Available ? setAvaiable(items) : setSelected(items)
     );
   };
 
