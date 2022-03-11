@@ -71,6 +71,11 @@ const MainPage = ({ data }) => {
     );
   };
 
+  useEffect(() => {
+    setAvailable(data.available);
+    setSelected(data.selected);
+  }, [data]);
+
   // 1. input 에 입력할 때마다 바로바로 검색되는 경우
   useEffect(() => availableSearching(), [availableInput]);
   useEffect(() => selectedSearching(), [selectedInput]);
@@ -88,8 +93,9 @@ const MainPage = ({ data }) => {
             value={availableInput}
             setValue={setAvailableInput}
             enter={availableSearching}
+            isSearchMode={isSearchMode}
           />
-          <Selector data={available} title={titleInput[0]}/>
+          <Selector data={available} title={titleInput[0]} />
         </Wrapper>
         {/* 버튼모음*/}
         <BtnWrapper>
@@ -114,6 +120,7 @@ const MainPage = ({ data }) => {
             value={selectedInput}
             setValue={setSelectedInput}
             enter={selectedSearching}
+            isSearchMode={isSearchMode}
           />
           <Selector data={selected} title={titleInput[1]} />
         </Wrapper>

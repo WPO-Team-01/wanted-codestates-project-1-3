@@ -10,6 +10,8 @@ const Container = styled.section`
   align-items: center;
   border: 1px solid #e5e7eb;
   border-radius: 4px;
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 const Total = styled.div`
@@ -22,7 +24,7 @@ const Total = styled.div`
 const Selector = ({ data, title }) => {
   return (
     <Container>
-      <List data={data} title={title}/>
+      <List data={data} title={title} />
       <Total>1 / 8</Total>
     </Container>
   );
