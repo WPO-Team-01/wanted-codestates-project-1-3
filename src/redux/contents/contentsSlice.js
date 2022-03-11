@@ -48,7 +48,7 @@ export const contentsSlice = createSlice({
       const selected = state.selected.filter(
         (item) => !action.payload.includes(item.id),
       );
-      state.available = state.available.concat(removed);
+      state.available = [...state.available, ...removed];
       state.selected = selected;
     },
   },
