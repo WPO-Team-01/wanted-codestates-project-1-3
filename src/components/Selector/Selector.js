@@ -76,7 +76,7 @@ const Selector = ({
   fieldCount,
   selectCount,
   isDisplaySelectItem,
-  itemSize
+  itemSize,
 }) => {
   const dispatch = useDispatch();
   const [anchorId, setAnchorId] = useState();
@@ -108,7 +108,7 @@ const Selector = ({
       setShiftEditingList([]);
     }
 
-    if (isMoveOneMode && hotkeys.isPressed("command")) {
+    if (!isMoveOneMode && hotkeys.isPressed("command")) {
       const targetList = [
         ...idList.filter((id) => !shiftEditingList.includes(id)),
         ...shiftEditingList,
@@ -124,7 +124,7 @@ const Selector = ({
       setShiftEditingList([]);
     }
 
-    if (isMoveOneMode && hotkeys.isPressed("shift")) {
+    if (!isMoveOneMode && hotkeys.isPressed("shift")) {
       if (!idList.length) {
         setIdList([convertedValue]);
         setAnchorId(convertedValue);
@@ -163,7 +163,7 @@ const Selector = ({
                   className="fields"
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  style={{width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {data.map((item, index) => {
                     let strFormId = String(item.id);
@@ -178,7 +178,6 @@ const Selector = ({
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                             ref={provided.innerRef}
-                            
                           >
                             <Item
                               key={item.id}

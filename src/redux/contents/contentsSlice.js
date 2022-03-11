@@ -23,11 +23,11 @@ export const contentsSlice = createSlice({
     allSelect: (state) => {
       const moveSelect = state.available;
       state.available = [];
-      state.selected = moveSelect;
+      state.selected = [...state.selected, ...moveSelect];
     },
     allRemoveSelect: (state) => {
       const removeSelect = state.selected;
-      state.available = removeSelect;
+      state.available = [...state.available, ...removeSelect];
       state.selected = [];
     },
     moveToSelect: (state, action) => {

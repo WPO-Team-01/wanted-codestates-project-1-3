@@ -15,7 +15,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import styled from "styled-components";
 import SearchInput from "../components/Selector/SearchInput";
 import Button from "../components/Selector/Button";
-import Option from '../components/Option/Option';
+import Option from "../components/Option/Option";
 import { useState, useMemo } from "react";
 import Selector, { ListType } from "../components/Selector/Selector";
 
@@ -24,8 +24,8 @@ const Container = styled.div`
   justify-content: center;
   padding-top: 100px;
   box-sizing: border-box;
-  height: ${props => String(props.height)+"px"};
-  -ms-user-select: none; 
+  height: ${(props) => String(props.height) + "px"};
+  -ms-user-select: none;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
   -webkit-user-select: none;
@@ -34,7 +34,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   margin: 0 10px;
-  width: ${props => String(props.width)+"px"};
+  width: ${(props) => String(props.width) + "px"};
   height: 100%;
 `;
 
@@ -89,6 +89,7 @@ const MainPage = () => {
       return alert("필드를 선택해 주세요");
     }
     dispatch(removeFromSelect(moveAvailable));
+    setMoveSelected([]);
     setMoveAailable([]);
   };
 
@@ -98,6 +99,7 @@ const MainPage = () => {
     }
     dispatch(moveToSelect(moveSelected));
     setMoveSelected([]);
+    setMoveAailable([]);
   };
 
   const onAllSelected = () => {
@@ -106,6 +108,8 @@ const MainPage = () => {
     } else {
       alert("추가할 데이터가 없습니다.");
     }
+    setMoveSelected([]);
+    setMoveAailable([]);
   };
 
   const onAllRemoveSelected = () => {
@@ -114,12 +118,14 @@ const MainPage = () => {
     } else {
       alert("제거할 데이터가 없습니다.");
     }
+    setMoveSelected([]);
+    setMoveAailable([]);
   };
 
   return (
     <div>
       <Container height={areaSize[1]}>
-        <Wrapper width ={areaSize[0]}>
+        <Wrapper width={areaSize[0]}>
           <SearchInput
             value={availableInput}
             setValue={setAvailableInput}
@@ -165,7 +171,7 @@ const MainPage = () => {
             <KeyboardDoubleArrowLeftIcon />
           </Button>
         </BtnWrapper>
-        <Wrapper width ={areaSize[0]}>
+        <Wrapper width={areaSize[0]}>
           <SearchInput
             value={selectedInput}
             setValue={setSelectedInput}
