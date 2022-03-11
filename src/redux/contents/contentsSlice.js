@@ -14,6 +14,12 @@ export const contentsSlice = createSlice({
       state.available = initialData;
       state.selected = [];
     },
+    setAvaiable: (state, action) => {
+      state.available = action.payload;
+    },
+    setSelected: (state, action) => {
+      state.selected = action.payload;
+    },
     allSelect: (state) => {
       state.available = [];
       state.selected = initialData;
@@ -41,7 +47,13 @@ export const contentsSlice = createSlice({
   },
 });
 
-export const { initialization, allSelect, moveToSelect, removeFromSelect } =
-  contentsSlice.actions;
+export const {
+  initialization,
+  allSelect,
+  moveToSelect,
+  removeFromSelect,
+  setAvaiable,
+  setSelected,
+} = contentsSlice.actions;
 
 export default contentsSlice.reducer;
