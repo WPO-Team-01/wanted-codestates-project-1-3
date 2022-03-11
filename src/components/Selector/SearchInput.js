@@ -25,7 +25,7 @@ const SearchInput = ({ value, setValue, enter, isSearchMode }) => {
         placeholder="search"
         value={value}
         onChange={onChange}
-        disabled={isSearchMode}
+        disabled={!isSearchMode}
         // onKeyPress={onKeyPress}
       />
     </div>
