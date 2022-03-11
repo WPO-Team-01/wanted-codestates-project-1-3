@@ -4,6 +4,7 @@ import {
   allSelect,
   moveToSelect,
   removeFromSelect,
+  allRemoveSelect,
 } from "../redux/contents/contentsSlice";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -42,6 +43,11 @@ const PopoverWrapper = styled.div`
 const MainPage = () => {
   const data = useSelector((state) => state.contents);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  //한가지 item 선택
+  const [isSelected, setIsSelected] = useState([]);
+  //여러개 item 선택
+  const [multiSelected, setMultiSelected] = useState([]);
+
   const dispatch = useDispatch();
 
   const [isTitleChange, setIsTitleChange] = useState(false);
@@ -50,7 +56,7 @@ const MainPage = () => {
     "selected options",
   ]); // available, selected
   const [isSearchMode, setIsSearchMode] = useState(false);
-  const [isMoveOneMode, setIsMoveOneMode] = useState(false);
+  const [isMoveOneMode, setIsMoveOneMode] = useState(true);
   const [isDisplaySelectItem, setIsDisplaySelectItem] = useState(false);
   const [itemSize, setItemSize] = useState("XS");
   const [areaSize, setAreaSize] = useState([200, 50]); // 가로, 세로
@@ -69,13 +75,37 @@ const MainPage = () => {
   }, [data, availableInput]);
 
   const handleRemoveFromSelect = () => {
-    if (isMoveOneMode) {
-      dispatch(removeFromSelect(isSelected, data));
+    if (!multiSelected.length) {
+      return alert("필드를 선택해 주세요");
+    }
+    dispatch(removeFromSelect(multiSelected));
+    setMultiSelected([]);
+  };
+
+  const handleMoveToSelect = () => {
+    if (!multiSelected.length) {
+      return alert("필드를 선택해 주세요");
+    }
+    dispatch(moveToSelect(multiSelected));
+    setMultiSelected([]);
+  };
+
+  const onAllSelected = () => {
+    if (data.available.length) {
+      dispatch(allSelect());
     } else {
-      dispatch(removeFromSelect(multiSelected, data));
-      setMultiSelected([]);
+      alert("추가할 데이터가 없습니다.");
     }
   };
+
+  const onAllRemoveSelected = () => {
+    if (data.selected.length) {
+      dispatch(allRemoveSelect());
+    } else {
+      alert("제거할 데이터가 없습니다.");
+    }
+  };
+
   return (
     <div>
       <Container>
@@ -87,17 +117,12 @@ const MainPage = () => {
             isSearchMode={isSearchMode}
           />
           <Selector
-            data={available}
-            title={titleInput[0]}
-            isMoveOneMode={isMoveOneMode}
-            multiSelected={multiSelected}
-            setMultiSelected={setMultiSelected}
-          />
-          <Selector
             data={availableSearching}
             title={titleInput[0]}
             type={ListType.Available}
             isMoveOneMode={isMoveOneMode}
+            multiSelected={multiSelected}
+            setMultiSelected={setMultiSelected}
           />
         </Wrapper>
         {/* 버튼모음*/}
@@ -119,10 +144,10 @@ const MainPage = () => {
           >
             <ArrowBackIosNewIcon />
           </Button>
-          <Button onClick={() => dispatch(allSelect(data))}>
+          <Button onClick={onAllSelected}>
             <KeyboardDoubleArrowRightIcon />
           </Button>
-          <Button onClick={() => dispatch(initialization(data))}>
+          <Button onClick={onAllRemoveSelected}>
             <KeyboardDoubleArrowLeftIcon />
           </Button>
         </BtnWrapper>
@@ -134,17 +159,12 @@ const MainPage = () => {
             isSearchMode={isSearchMode}
           />
           <Selector
-            data={selected}
-            title={titleInput[1]}
-            isMoveOneMode={isMoveOneMode}
-            multiSelected={multiSelected}
-            setMultiSelected={setMultiSelected}
-          />
-          <Selector
-            data={data.selected}
+            data={selectedSearching}
             title={titleInput[1]}
             type={ListType.Selected}
             isMoveOneMode={isMoveOneMode}
+            multiSelected={multiSelected}
+            setMultiSelected={setMultiSelected}
           />
         </Wrapper>
         {/* 셋팅메뉴 */}

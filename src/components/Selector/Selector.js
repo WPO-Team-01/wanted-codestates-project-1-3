@@ -63,11 +63,29 @@ const Item = styled.div`
   box-sizing: border-box;
 `;
 
-const Selector = ({ data, title, type, isMoveOneMode = true }) => {
+const Selector = ({
+  data,
+  title,
+  type,
+  isMoveOneMode = true,
+  setMultiSelected,
+}) => {
   const dispatch = useDispatch();
   const [anchorId, setAnchorId] = useState();
   const [idList, setIdList] = useState([]);
   const [shiftEditingList, setShiftEditingList] = useState([]);
+
+  const selectedIdList = [
+    ...idList.filter((id) => !shiftEditingList.includes(id)),
+    ...shiftEditingList,
+  ];
+
+  useEffect(() => {
+    setMultiSelected([
+      ...idList.filter((id) => !shiftEditingList.includes(id)),
+      ...shiftEditingList,
+    ]);
+  }, [idList, shiftEditingList, setMultiSelected]);
 
   useEffect(() => {
     hotkeys("shift, command");
@@ -120,11 +138,6 @@ const Selector = ({ data, title, type, isMoveOneMode = true }) => {
       setShiftEditingList(selectedSection);
     }
   };
-
-  const selectedIdList = [
-    ...idList.filter((id) => !shiftEditingList.includes(id)),
-    ...shiftEditingList,
-  ];
 
   const handleOnDragEnd = (result) => {
     const items = [...data];
