@@ -19,10 +19,22 @@ const Total = styled.div`
   box-sizing: border-box;
 `;
 
-const Selector = ({ data, title }) => {
+const Selector = ({
+  data,
+  title,
+  isMoveOneMode,
+  multiSelected,
+  setMultiSelected,
+}) => {
   return (
     <Container>
-      <List data={data} title={title}/>
+      <List
+        data={data}
+        title={title}
+        isMoveOneMode={isMoveOneMode}
+        multiSelected={multiSelected}
+        setMultiSelected={setMultiSelected}
+      />
       <Total>1 / 8</Total>
     </Container>
   );

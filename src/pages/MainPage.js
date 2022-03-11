@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import {
+  initialization,
+  allSelect,
+  moveToSelect,
+  removeFromSelect,
+} from '../redux/contents/contentsSlice';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
@@ -35,7 +41,12 @@ const PopoverWrapper = styled.div`
 
 const MainPage = () => {
   const data = useSelector(state => state.contents);
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
+
+  //한가지 item 선택
+  const [isSelected, setIsSelected] = useState([]);
+  //여러개 item 선택
+  const [multiSelected, setMultiSelected] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -81,11 +92,28 @@ const MainPage = () => {
   // 위 두줄로 작동(주석 해제하면 됨.)
   useEffect(() => {
     setAvailable(data.available);
-  }, [data.available]);
+    setSelected(data.selected);
+  }, [data]);
   // 2. input 에 입력 뒤 엔터키를 쳐야만 검색되는 경우
   // SearchInput 태그에 enter props로 내려주는 것과,
   // searchInput 파일안의 onKeyPress 핸들러로 작동
+  const handleMoveToSelect = () => {
+    if (isMoveOneMode) {
+      dispatch(moveToSelect(isSelected, data));
+    } else {
+      dispatch(moveToSelect(multiSelected, data));
+      setMultiSelected([]);
+    }
+  };
 
+  const handleRemoveFromSelect = () => {
+    if (isMoveOneMode) {
+      dispatch(removeFromSelect(isSelected, data));
+    } else {
+      dispatch(removeFromSelect(multiSelected, data));
+      setMultiSelected([]);
+    }
+  };
   return (
     <div>
       <Container>
@@ -95,23 +123,37 @@ const MainPage = () => {
             setValue={setAvailableInput}
             enter={availableSearching}
           />
-          <Selector data={available} title={titleInput[0]} />
+          <Selector
+            data={available}
+            title={titleInput[0]}
+            isMoveOneMode={isMoveOneMode}
+            multiSelected={multiSelected}
+            setMultiSelected={setMultiSelected}
+          />
         </Wrapper>
         {/* 버튼모음*/}
         <BtnWrapper>
-          <Button>
+          <Button onClick={() => dispatch(initialization(data))}>
             <ReplayIcon />
           </Button>
-          <Button>
+          <Button
+            onClick={() => {
+              handleMoveToSelect();
+            }}
+          >
             <ArrowForwardIosIcon />
           </Button>
-          <Button>
+          <Button
+            onClick={() => {
+              handleRemoveFromSelect();
+            }}
+          >
             <ArrowBackIosNewIcon />
           </Button>
-          <Button>
+          <Button onClick={() => dispatch(allSelect(data))}>
             <KeyboardDoubleArrowRightIcon />
           </Button>
-          <Button>
+          <Button onClick={() => dispatch(initialization(data))}>
             <KeyboardDoubleArrowLeftIcon />
           </Button>
         </BtnWrapper>
@@ -121,7 +163,13 @@ const MainPage = () => {
             setValue={setSelectedInput}
             enter={selectedSearching}
           />
-          <Selector data={selected} title={titleInput[1]} />
+          <Selector
+            data={selected}
+            title={titleInput[1]}
+            isMoveOneMode={isMoveOneMode}
+            multiSelected={multiSelected}
+            setMultiSelected={setMultiSelected}
+          />
         </Wrapper>
         {/* 셋팅메뉴 */}
         <PopoverWrapper>

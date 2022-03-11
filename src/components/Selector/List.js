@@ -38,9 +38,14 @@ const Item = styled.div`
   }
 `;
 
-const List = ({ data, title }) => {
+const List = ({
+  data,
+  title,
+  isMoveOneMode,
+  multiSelected,
+  setMultiSelected,
+}) => {
   const [listData, setListData] = useState(data);
-  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     setListData(data);
@@ -53,17 +58,12 @@ const List = ({ data, title }) => {
     setListData(items);
   };
 
-  const handleMultiClick = e => {
-    //shift 누르면 처음 누른거에서 마지막까지 한번에 선택
-    if (e.shiftKey) {
-      if (!isClicked) {
-        //처음 shift 누르고 클릭할 때
-        setIsClicked(true);
-        //처음에 위쪽에 클릭해서 아래쪽을 눌러야하는 경우
-        //처음에 아래쪽을 클릭해서 위쪽을 눌러야하는 경우
-      } else if (isClicked) {
-        // 하나이상의 아이템 클릭후 shift 눌렀을 때
-      }
+  const handleClick = item => {
+    if (isMoveOneMode) {
+      setMultiSelected([item.id]);
+    } else {
+      let newArr = [...multiSelected, ...[item.id]];
+      setMultiSelected(newArr);
     }
   };
 
@@ -93,12 +93,7 @@ const List = ({ data, title }) => {
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <Item
-                            key={item.id}
-                            onClick={e => {
-                              handleMultiClick(e);
-                            }}
-                          >
+                          <Item key={item.id} onClick={() => handleClick(item)}>
                             {item.emoji}&nbsp;&nbsp;
                             {item.name}
                           </Item>
