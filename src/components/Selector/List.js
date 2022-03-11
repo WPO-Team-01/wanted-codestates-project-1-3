@@ -37,7 +37,8 @@ const Item = styled.div`
     background: #f1f3f8;
   }
 `;
-const List = ({ data }) => {
+
+const List = ({ data, title }) => {
   const [listData, setListData] = useState(data);
   const [isClicked, setIsClicked] = useState(false);
 
@@ -68,7 +69,7 @@ const List = ({ data }) => {
 
   return (
     <Container>
-      <Title>available option</Title>
+      <Title>{title}</Title>
       <SubContainer>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId='fields'>

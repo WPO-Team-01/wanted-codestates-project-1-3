@@ -13,11 +13,11 @@ const Container = styled.div`
   border-bottom: 1px solid #e5e7eb;
 `;
 
-const Menu = ({ title, mode }) => {
+const Menu = ({ title, mode, state, setState }) => {
   return (
     <Container>
       {title}
-      {mode === "Button" ? <Button /> : mode === "Radio" ? <Radio /> : null}
+      {mode === "Button" ? <Button state={state} setState={setState} /> : mode === "Radio" ? <Radio state={state} setState={setState} /> : null}
     </Container>
   );
 };

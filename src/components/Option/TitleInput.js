@@ -18,11 +18,20 @@ const Input = styled.input`
   margin-top: 10px;
 `;
 
-const TitleInput = ({ title1, title2 }) => {
+const TitleInput = ({ title, setTitle, state }) => {
+  const handleTitleInput = (e, num) =>{
+    if(state){
+      let tempTitleList = [...title];
+      tempTitleList[num] = e.target.value;
+      setTitle((title) => tempTitleList);
+    }
+  };
+
+
   return (
     <Container>
-      <Input placeholder="타이틀을 입력해 주세요." defaultValue={title1} />
-      <Input placeholder="타이틀을 입력해 주세요." defaultValue={title2} />
+      <Input placeholder="타이틀을 입력해 주세요." defaultValue={title[0]} onChange={(e)=> handleTitleInput(e, 0)} />
+      <Input placeholder="타이틀을 입력해 주세요." defaultValue={title[1]} onChange={(e) => handleTitleInput(e, 1)} />
     </Container>
   );
 };
