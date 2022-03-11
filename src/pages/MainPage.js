@@ -15,7 +15,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import styled from "styled-components";
 import SearchInput from "../components/Selector/SearchInput";
 import Button from "../components/Selector/Button";
-import Popover from "../components/Selector/Popover";
+import Option from '../components/Option/Option';
 import { useState, useMemo } from "react";
 import Selector, { ListType } from "../components/Selector/Selector";
 
@@ -24,16 +24,26 @@ const Container = styled.div`
   justify-content: center;
   padding-top: 100px;
   box-sizing: border-box;
+  height: ${props => String(props.height)+"px"};
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 `;
 
 const Wrapper = styled.div`
   margin: 0 10px;
+  width: ${props => String(props.width)+"px"};
+  height: 100%;
 `;
 
 const BtnWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-self: center;
+  height: 100%;
 `;
 
 const PopoverWrapper = styled.div`
@@ -58,8 +68,8 @@ const MainPage = () => {
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [isMoveOneMode, setIsMoveOneMode] = useState(true);
   const [isDisplaySelectItem, setIsDisplaySelectItem] = useState(false);
-  const [itemSize, setItemSize] = useState("XS");
-  const [areaSize, setAreaSize] = useState([200, 50]); // 가로, 세로
+  const [itemSize, setItemSize] = useState("M");
+  const [areaSize, setAreaSize] = useState([300, 800]); // 가로, 세로
 
   // Selector에 props로 내려주는 state(배열 값)
   const [availableInput, setAvailableInput] = useState("");
@@ -108,8 +118,8 @@ const MainPage = () => {
 
   return (
     <div>
-      <Container>
-        <Wrapper>
+      <Container height={areaSize[1]}>
+        <Wrapper width ={areaSize[0]}>
           <SearchInput
             value={availableInput}
             setValue={setAvailableInput}
@@ -126,6 +136,7 @@ const MainPage = () => {
             fieldCount={data.available.length}
             selectCount={moveSelected.length}
             isDisplaySelectItem={isDisplaySelectItem}
+            itemSize={itemSize}
           />
         </Wrapper>
         {/* 버튼모음*/}
@@ -154,7 +165,7 @@ const MainPage = () => {
             <KeyboardDoubleArrowLeftIcon />
           </Button>
         </BtnWrapper>
-        <Wrapper>
+        <Wrapper width ={areaSize[0]}>
           <SearchInput
             value={selectedInput}
             setValue={setSelectedInput}
@@ -171,6 +182,7 @@ const MainPage = () => {
             fieldCount={data.selected.length}
             selectCount={moveAvailable.length}
             isDisplaySelectItem={isDisplaySelectItem}
+            itemSize={itemSize}
           />
         </Wrapper>
         {/* 셋팅메뉴 */}
@@ -179,7 +191,7 @@ const MainPage = () => {
             <SettingsIcon />
           </Button>
           {isModalOpen ? (
-            <Popover
+            <Option
               titleChange={isTitleChange}
               setTitleChange={setIsTitleChange}
               title={titleInput}

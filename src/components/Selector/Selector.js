@@ -11,11 +11,13 @@ export const ListType = {
 };
 
 const SelectorContainer = styled.section`
-  width: 300px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
   border: 1px solid #e5e7eb;
   border-radius: 4px;
   overflow-x: hidden;
@@ -31,6 +33,7 @@ const Total = styled.div`
 
 const Container = styled.div`
   width: 100%;
+  height: 100%;
   flex-grow: 1;
 `;
 const SubContainer = styled.section`
@@ -39,8 +42,6 @@ const SubContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  overflow-x: hidden;
-  overflow-y: auto;
 `;
 const Title = styled.div`
   width: 100%;
@@ -61,6 +62,8 @@ const Item = styled.div`
   padding: 10px;
   border-bottom: 1px #e5e7eb solid;
   box-sizing: border-box;
+  font-size: ${({ state }) =>
+    state === "M" ? "medium" : state === "S" ? "small" : "x-small"};
 `;
 
 const Selector = ({
@@ -73,6 +76,7 @@ const Selector = ({
   fieldCount,
   selectCount,
   isDisplaySelectItem,
+  itemSize
 }) => {
   const dispatch = useDispatch();
   const [anchorId, setAnchorId] = useState();
@@ -159,6 +163,7 @@ const Selector = ({
                   className="fields"
                   {...provided.droppableProps}
                   ref={provided.innerRef}
+                  style={{width:"100%"}}
                 >
                   {data.map((item, index) => {
                     let strFormId = String(item.id);
@@ -173,12 +178,14 @@ const Selector = ({
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                             ref={provided.innerRef}
+                            
                           >
                             <Item
                               key={item.id}
                               id={item.id}
                               background={select.includes(item.id) && "#62D1FF"}
                               onClick={(e) => onClick(e.target.id)}
+                              state={itemSize}
                             >
                               {item.emoji}&nbsp;&nbsp;
                               {item.name}
