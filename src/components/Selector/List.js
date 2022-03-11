@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
   width: 100%;
@@ -37,18 +37,33 @@ const Item = styled.div`
   }
 `;
 
-const List = ({ data, title }) => {
+const List = ({
+  data,
+  title,
+  isMoveOneMode,
+  multiSelected,
+  setMultiSelected,
+}) => {
   const [listData, setListData] = useState(data);
 
   useEffect(() => {
     setListData(data);
   }, [data]);
 
-  const handleOnDragEnd = (result) => {
+  const handleOnDragEnd = result => {
     const items = [...listData];
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     setListData(items);
+  };
+
+  const handleClick = item => {
+    if (isMoveOneMode) {
+      setMultiSelected([item.id]);
+    } else {
+      let newArr = [...multiSelected, ...[item.id]];
+      setMultiSelected(newArr);
+    }
   };
 
   return (
@@ -56,10 +71,10 @@ const List = ({ data, title }) => {
       <Title>{title}</Title>
       <SubContainer>
         <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId="fields">
-            {(provided) => (
+          <Droppable droppableId='fields'>
+            {provided => (
               <div
-                className="fields"
+                className='fields'
                 {...provided.droppableProps}
                 ref={provided.innerRef}
                 style={{ width: "100%" }}
@@ -72,13 +87,13 @@ const List = ({ data, title }) => {
                       draggableId={strFormId}
                       index={index}
                     >
-                      {(provided) => (
+                      {provided => (
                         <div
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <Item key={item.id}>
+                          <Item key={item.id} onClick={() => handleClick(item)}>
                             {item.emoji}&nbsp;&nbsp;
                             {item.name}
                           </Item>
