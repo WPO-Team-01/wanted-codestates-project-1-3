@@ -14,9 +14,21 @@ export const contentsSlice = createSlice({
       state.available = initialData;
       state.selected = [];
     },
+    setAvaiable: (state, action) => {
+      state.available = action.payload;
+    },
+    setSelected: (state, action) => {
+      state.selected = action.payload;
+    },
     allSelect: (state) => {
+      const moveSelect = state.available;
       state.available = [];
-      state.selected = initialData;
+      state.selected = moveSelect;
+    },
+    allRemoveSelect: (state) => {
+      const removeSelect = state.selected;
+      state.available = removeSelect;
+      state.selected = [];
     },
     moveToSelect: (state, action) => {
       const remove = state.available.filter(
@@ -25,8 +37,9 @@ export const contentsSlice = createSlice({
       const select = state.available.filter((item) =>
         action.payload.includes(item.id),
       );
+
       state.available = remove;
-      state.selected = select;
+      state.selected = [...state.selected, ...select];
     },
     removeFromSelect: (state, action) => {
       const removed = state.selected.filter((item) =>
@@ -35,13 +48,20 @@ export const contentsSlice = createSlice({
       const selected = state.selected.filter(
         (item) => !action.payload.includes(item.id),
       );
-      state.available = state.available.concat(removed);
+      state.available = [...state.available, ...removed];
       state.selected = selected;
     },
   },
 });
 
-export const { initialization, allSelect, moveToSelect, removeFromSelect } =
-  contentsSlice.actions;
+export const {
+  initialization,
+  allSelect,
+  moveToSelect,
+  removeFromSelect,
+  setAvaiable,
+  setSelected,
+  allRemoveSelect,
+} = contentsSlice.actions;
 
 export default contentsSlice.reducer;

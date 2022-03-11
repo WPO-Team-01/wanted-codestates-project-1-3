@@ -7,7 +7,7 @@ const Input = styled.input`
   border-radius: 4px;
   box-sizing: border-box;
 `;
-const SearchInput = ({ value, setValue, enter }) => {
+const SearchInput = ({ value, setValue, enter, isSearchMode }) => {
   const onChange = (e) => {
     setValue(e.target.value);
   };
@@ -25,6 +25,7 @@ const SearchInput = ({ value, setValue, enter }) => {
         placeholder="search"
         value={value}
         onChange={onChange}
+        disabled={isSearchMode}
         // onKeyPress={onKeyPress}
       />
     </div>

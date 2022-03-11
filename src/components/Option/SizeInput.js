@@ -20,15 +20,23 @@ const Input = styled.input`
 
 const SizeInput = ({ state, setState }) => {
   const handleSizeInput = (e, num) => {
-    let tempSizeList = [...state];
-    tempSizeList[num] = e.target.value;
-    setState((state) => tempSizeList);
+    if (e.key === "Enter") {
+      let tempSizeList = [...state];
+      tempSizeList[num] = e.target.value;
+      setState((state) => tempSizeList);
+    }
   };
 
   return (
     <Container>
-      <Input placeholder={`가로 (현재 : ${state[0]}px)`} onChange={(e) => handleSizeInput(e, 0)}/>
-      <Input placeholder={`세로 (현재 : ${state[1]}px)`} onChange={(e) => handleSizeInput(e, 1)}/>
+      <Input
+        placeholder={`가로 (현재 : ${state[0]}px)`}
+        onKeyPress={(e) => handleSizeInput(e, 0)}
+      />
+      <Input
+        placeholder={`세로 (현재 : ${state[1]}px)`}
+        onKeyPress={(e) => handleSizeInput(e, 1)}
+      />
     </Container>
   );
 };
